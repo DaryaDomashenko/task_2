@@ -1,0 +1,210 @@
+Задание 2.4 Шаблоны проектирования XSD
+
+Для примера возьмем следующий XML-документ в качестве источника данных.
+
+<?xml version="1.0" encoding="UTF-8"?>
+<Customer>
+   <CustomerId>100</CustomerId>
+   <FirstName>Павел</FirstName>
+   <LastName>Орлов</LastName>
+   <Address>
+      <StreetAddress>Угрешская 2</StreetAddress>
+      <City>Москва</City>
+      <Zip>115088</Zip>
+   </Address>
+</Customer>
+
+И посмотрим, как можно описать одну и ту же структуру XML-документа разными способами. 
+В основе разделения на шаблоны лежит принцип определения глобальных элементов и/или типов данных внутри XSD.
+
+1. Матрешка (Russian Doll)
+
+Суть шаблона в том, что схема является зеркалом описываемого ею XML-документа: если сложные элементы содержат внутри себя другие сложные элементы, а те в свою очередь содержат простые, то и в XSD описания таких элементов будут вложены друг в друга. Название шаблон получил в честь известной во всем мире нашей куклы-матрешки, по аналогии с тем, как дочерние элементы в шаблоне инкапсулируются в родительские.
+
+Схема, описывающая структуру нашего файла-источника с использованием шаблона «Матрешка», выглядит так:
+
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/Customer" xmlns:tns="http://www.example.org/Customer"  elementFormDefault="qualified">
+
+    <xsd:element name="Customer">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="CustomerId" type="xsd:int" />
+                <xsd:element name="FirstName" type="xsd:string" />
+                <xsd:element name="LastName" type="xsd:string" />
+                <xsd:element name="Address">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="StreetAddress" type="xsd:string"/>
+                            <xsd:element name="City" type="xsd:string"/>
+                            <xsd:element name="Zip" type="xsd:string"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+</xsd:schema>
+
+Характеристики шаблона:
+Непрозрачность содержания. Содержание XSD непрозрачно для других схем, и даже для других частей той же схемы. Вследствие чего ни один из типов или элементов внутри XSD не может быть повторно использован.
+Скрытые области. Области схемы, в которой определяются локальные элементы («City» и «Zip» в примере), локализованы внутри корневого элемента («Address»). В результате если задать в схеме elementFormDefault = «unqualified», то пространства имен локальных элементов («City» и «Zip») скрыты в пределах схемы.
+Независимость. При такой конструкции каждый компонент схемы является автономным (т.е. не взаимосвязан с другими компонентами). Следовательно, изменения отдельных компонентов будет иметь ограниченное влияние. Например, если добавить в состав адреса элемент «FlatNumber», это никак не повлияет на другие элементы схемы.
+Компактность. Благодаря такой конструкции все связанные по смыслу данные объединяются в схеме в автономные компоненты, т.е. компоненты являются компактными.
+
+2. Салями (Salami Slice)
+Суть шаблона в том, что описываемый XML-документ разделяется на составные элементы, каждый из которых описывается в XSD как глобальный. Затем описанные элементы соединяются воедино.
+
+Схема, описывающая структуру файла-источника с использованием шаблона «Салями», выглядит так:
+
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.example.org/Customer"
+        xmlns:tns="http://www.example.org/Customer"
+        elementFormDefault="qualified">
+
+    <xsd:element name="CustomerId" type="xsd:int" />
+    <xsd:element name="FirstName" type="xsd:string" />
+    <xsd:element name="LastName" type="xsd:string" />
+    <xsd:element name="StreetAddress" type="xsd:string"/>
+    <xsd:element name="City" type="xsd:string"/>
+    <xsd:element name="Zip" type="xsd:string"/>
+
+    <xsd:element name="Customer">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="tns:CustomerId" />
+                <xsd:element ref="tns:FirstName" />
+                <xsd:element ref="tns:LastName" />
+                <xsd:element name="Address">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element ref="tns:StreetAddress" />
+                            <xsd:element ref="tns:City" />
+                            <xsd:element ref="tns:Zip" />
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    
+</xsd:schema>
+
+Характеристики шаблона:
+Прозрачность содержания. Все элементы могут видеть другие схемы, а также другие компоненты этой XSD.
+Глобальность. Так как все элементы схемы объявлены глобально, то независимо от значения elementFormDefault пространства имен схемы в XML-документе будет показан весь набор атрибутов (что-то может быть пустым).
+Взаимозависимость. При такой конструкции сложные элементы ссылаются на другие части схемы, то есть зависят от них. Следовательно, изменение отдельных компонентов могут повлечь обширные изменения всей схемы.
+Компактность. Благодаря такой конструкции все связанные по смыслу данные объединяются в схеме в автономные компоненты, т. е. компоненты являются компактными.
+
+3. Венецианские жалюзи (Venetian Blind)
+
+Суть шаблона в том, что описываемый XML-документ разделяется на составные типы, каждый из которых описывается в XSD как глобальный. Затем объявляется корневой элемент, соответствующий глобальному типу, соединяющему схему воедино.
+
+Схема, описывающая структуру файла-источника с использованием шаблона «Венецианские жалюзи», выглядит так:
+
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.example.org/Customer"
+        xmlns:tns="http://www.example.org/Customer"
+        elementFormDefault="qualified">
+
+    <xsd:complexType name="AddressType">
+        <xsd:sequence>
+            <xsd:element name="StreetAddress" type="xsd:string"/>
+            <xsd:element name="City" type="xsd:string"/>
+            <xsd:element name="Zip" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:complexType name="CustomerType">
+        <xsd:sequence>
+            <xsd:element name="CustomerId" type="xsd:int" />
+            <xsd:element name="FirstName" type="xsd:string" />
+            <xsd:element name="LastName" type="xsd:string" />
+            <xsd:element name="Address" type="tns:AddressType" />
+        </xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:element name="Customer" type="tns:CustomerType" />
+
+</xsd:schema>
+
+Характеристики шаблона:
+Прозрачность содержания. Типы данных видны из других схем, а также видны компонентам этой XSD.
+Максимальное скрытие имен. Объявления элементов локальны, поэтому шаблон имеет максимальный потенциал для скрытия имен.
+Простое управление скрытием пустых атрибутов. Если пространства имен скрыты, то показывать или нет пустые атрибуты в документах управляется одним переключателем elementFormDefault.
+Взаимозависимость. При такой конструкции сложные типы данных ссылаются на другие части схемы, то есть зависят от них. Следовательно, изменение отдельных компонентов могут повлечь обширные изменения всей схемы.
+Компактность. Благодаря такой конструкции все связанные по смыслу данные объединяются в схеме в автономные компоненты, т. е. компоненты являются компактными.
+
+4. Райский сад (Garden of Eden)
+
+«Райский сад» хорош тем, что определяет каждый элемент и составной тип данных как глобальный. Это позволяет ссылаться на любой тип или элемент в пределах одного XSD или из любой другой XSD и даже из WSDL. Только так можно полностью контролировать семантику и типов и элементов.
+
+Схема, описывающая структуру файла-источника с использованием шаблона «Райский сад», выглядит так:
+
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.example.org/Customer"
+        xmlns:tns="http://www.example.org/Customer"
+        elementFormDefault="qualified">
+    
+    <xsd:element name="CustomerId" type="xsd:int"/>
+    <xsd:element name="FirstName" type="xsd:string"/>
+    <xsd:element name="LastName" type="xsd:string"/>
+    <xsd:element name="StreetAddress" type="xsd:string"/>
+    <xsd:element name="City" type="xsd:string"/>
+    <xsd:element name="Zip" type="xsd:string"/>
+
+    <xsd:element name="Address" type="tns:AddressType"/>
+    <xsd:element name="Customer" type="tns:CustomerType"/>
+
+    <xsd:complexType name="AddressType">
+        <xsd:sequence>
+            <xsd:element ref="tns:StreetAddress"/>
+            <xsd:element ref="tns:City"/>
+            <xsd:element ref="tns:Zip"/>
+        </xsd:sequence>
+    </xsd:complexType>
+      
+    <xsd:complexType name="CustomerType">
+         <xsd:sequence>
+             <xsd:element ref="tns:CustomerId"/>
+             <xsd:element ref="tns:FirstName"/>
+             <xsd:element ref="tns:LastName"/>
+             <xsd:element ref="tns:Address"/>
+         </xsd:sequence>
+    </xsd:complexType>
+
+</xsd:schema>
+
+Характеристики шаблона:
+Максимальная прозрачность содержания. И типы, и элементы данных видны из других схем, а также видны компонентам этой XSD.
+Максимальное раскрытие имен. Ничего локально не определяется, поэтому видимость имен максимальная.
+Взаимозависимость. При такой конструкции сложные типы данных и элементы ссылаются на другие части схемы, то есть зависят от них. Следовательно, изменение отдельных компонентов могут повлечь обширные изменения всей схемы.
+Громоздкость. Связанные по смыслу данные «размазаны» по определению типа и элемента. «Читать» такую схему сложнее.
+
+Выбор шаблона
+
+При выборе шаблона важно учитывать несколько критериев:
+Насколько возможно повторное использование компонентов схемы;
+Насколько легко со схемой работать;
+Насколько компоненты схемы должны быть взаимозависимы или независимы.
+
+Те схемы, в которых хорошо поддерживается повторное использование компонентов, с другой стороны имеют сильные взаимосвязи между компонентами. При необходимости что-то поменять в такой схеме разработчик схемы может столкнуться с тем, что менять придется много связанных элементов и/или типов. Такими схемами впоследствии трудно управлять.
+
+В целом можно вывести следующие правила выбора шаблона:
+если повторное использование компонентов схемы не является необходимым, если важнее удобство использования XSD разработчиками, и строгой необходимости контролировать имена компонентов нет, то следует выбирать «Матрешку»;
+если повторное использование компонентов важнее удобства для разработчиков, а имена элементов данных нужно контролировать в пределах всей системы, то следует выбирать «Салями»;
+если вдобавок к предыдущему пункту важно контролировать наименования типов данных и иметь возможность повторно использовать типы данных, следует выбирать «Райский сад»;
+«Венецианские жалюзи» подойдут в случае, если важно и повторное использование компонентов, и свобода в определении их локальных имен (или возможность скрыть их внутри схемы).
+
+
+
+
+
+
+
+
+
