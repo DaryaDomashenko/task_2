@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menu xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:noNamespaceSchemaLocation="menu.xsd">
+
+	<food id="1">
+		<photo>Фото 1</photo>
+		<name>Ассорти рыбное</name>
+		<description>Слабосоленая форель, семга</description>
+		<portion>100/20/15</portion>
+	</food>
+
+	<food id="2">
+		<photo>Фото 2</photo>
+		<name>Тарталетки с красной икрой</name>
+		<description>Тарталетки с красной икрой</description>
+		<portion>60/50</portion>
+	</food>
+
+	<food id="3">
+		<photo>Фото 3</photo>
+		<name>Закуска по-русски</name>
+		<description>Кусочки атлантической сельди с отварным картофелем, луком, лимоном и зеленью</description>
+		<portion>70/50/2/10</portion>
+	</food>
+
+	<food id="4">
+		<photo>Фото 4</photo>
+		<name>Куриный рулет</name>
+		<description>Куриный рулет собственного производства</description>
+		<portion>100/5</portion>
+	</food>
+
+	<food id="5">
+		<photo>Фото 5</photo>
+		<name>Бастурма</name>
+		<description>Вяленая нарезка из говяжьего мяса</description>
+		<portion>50/5</portion>
+	</food>
+
+	<food id="6">
+		<photo>Фото 6</photo>
+		<name>Ассорти мясное</name>
+		<description>Нарезка из буженины, бастурмы, куриного рулета собственного производства и колбасы</description>
+		<portion>100/30</portion>
+	</food>
+
+	<food id="7">
+		<photo>Фото 7</photo>
+		<name>Язык отварной</name>
+		<description>Нарезка нежного говяжьего языка, подается с хреном</description>
+		<portion>80/20/1</portion>
+	</food>
+	<food id="8">
+		<photo>Фото 8</photo>
+		<name>Ассорти баклажаны</name>
+		<description>Жареные баклажаны с помидорами</description>
+		<portion>100/5</portion>
+	</food>
+
+	<food id="9">
+		<photo>Фото 92</photo>
+		<name>Ассорти баклажаны</name>
+		<description>Жареные баклажаны с чесноком</description>
+		<portion>100/5</portion>
+	</food>
+
+	<food id="10">
+		<photo>Фото 10</photo>
+		<name>Ассорти баклажаны</name>
+		<description>Жареные баклажаны с орехами</description>
+		<portion>100/5</portion>
+	</food>
+
+	<food id="11">
+		<photo>Фото 11</photo>
+		<name>Соленья по-домашнему</name>
+		<description>Маринованные овощи</description>
+		<portion>150/10</portion>
+	</food>
+
+	<food id="12">
+		<photo>Фото 12</photo>
+		<name>Бабушкины угощения</name>
+		<description>Ассорти из маринованных грибов</description>
+		<portion>120/20/10</portion>
+	</food>
+
+	<food id="13">
+		<photo>Фото 13</photo>
+		<name>Сырная тарелка</name>
+		<description>Сыры Чечел, дор блю, российский, мраморный</description>
+		<portion>100/5</portion>
+	</food>
+
+	<food id="14">
+		<photo>Фото 14</photo>
+		<name>Брынза</name>
+		<description>Рассольный сыр, изготавливаемый из овечьего молока</description>
+		<portion>75/5</portion>
+	</food>
+
+	<food id="15">
+		<photo>Фото 15</photo>
+		<name>Зелень</name>
+		<description>Кинза, лук, петрушка, укроп, базилик</description>
+		<portion>30</portion>
+	</food>
+
+	<food id="16">
+		<photo>Фото 16</photo>
+		<name>Ассорти овощное</name>
+		<description>Свежие помидоры, болгарский перец, огурцы, редис и зелень</description>
+		<portion>150/10</portion>
+	</food>
+
+	<food id="17">
+		<photo>Фото 17</photo>
+		<name>Овощной букет</name>
+		<description>Корейская морковь, капуста, фунчоза</description>
+		<portion>150/10</portion>
+	</food>
+
+	<food id="18">
+		<photo>Фото 18</photo>
+		<name>Овощи по-армянски</name>
+		<description>Мелко нарезанные свежие помидоры, огурцы, болгарский перец, укроп, базилик, кинза, лист салата, зелень</description>
+		<portion>150/40</portion>
+	</food>
+
+	<food id="19">
+		<photo>Фото 19</photo>
+		<name>Сеньер Помидор</name>
+		<description>Помидор, фаршированный сырным муссом</description>
+		<portion>150/1</portion>
+	</food>
+
+	<food id="20">
+		<photo>Фото 20</photo>
+		<name>Фестиваль салатов</name>
+		<portion>400/10</portion>
+	</food>
+
+	<food id="21">
+		<photo>Фото 21</photo>
+		<name>Оливки, маслины</name>
+		<portion>50</portion>
+	</food>
+	<food id="22">
+		<photo>Фото 22</photo>
+		<name>Лимон</name>
+		<portion>60</portion>
+	</food>
+
+	<food id="23">
+		<photo>Фото 23</photo>
+		<name>Мацони</name>
+		<portion>300</portion>
+	</food>
+
+	<food id="24">
+		<photo>Фото 24</photo>
+		<name>Лобио с шампиньонами</name>
+		<description>Фасоль с шампиньонами и грецким орехом</description>
+		<portion>150/5</portion>
+		<price>105</price>
+	</food>
+
+
+	<food id="25">
+		<photo>Фото 25</photo>
+		<name>Жульен</name>
+		<description>Жульен с курицей</description>
+		<portion>120/1</portion>
+		<price>145</price>
+	</food>
+
+	<food id="26">
+		<photo>Фото 26</photo>
+		<name>Жульен</name>
+		<description>Жульен с грибами</description>
+		<portion>120/1</portion>
+		<price>155</price>
+	</food>
+
+	<food id="27">
+		<photo>Фото 27</photo>
+		<name>Ахтамар мясной</name>
+		<description>Колбаса, ветчина, буженина, сыр,, запеченные на мангале в лаваше</description>
+		<portion>1 шт</portion>
+		<price>165</price>
+	</food>
+
+	<food id="28">
+		<photo>Фото 28</photo>
+		<name>Ахтамар с овощами</name>
+		<description>Сыр, помидоры, зелень, запеченные на мангале в лаваше</description>
+		<portion>1 шт</portion>
+		<price>150</price>
+	</food>
+
+	<food id="29">
+		<photo>Фото 29</photo>
+		<name>Сюрприз</name>
+		<portion>1 шт</portion>
+		<price>260</price>
+	</food>
+
+	<food id="30">
+		<photo>Фото 30</photo>
+		<name>Креветки</name>
+		<description>Креветки отварные</description>
+		<portion>120/30</portion>
+		<price>135</price>
+	</food>
+
+	<food id="31">
+		<photo>Фото 31</photo>
+		<name>Креветки</name>
+		<description>Креветки жареные</description>
+		<portion>120/30</portion>
+		<price>155</price>
+	</food>
+
+	<food id="32">
+		<photo>Фото 32</photo>
+		<name>Мидии по-турецки</name>
+		<description>Мидии, фаршированные сыром и грецким орехом</description>
+		<portion>150/30</portion>
+		<price>190</price>
+	</food>
+
+	<food id="33">
+		<photo>Фото 33</photo>
+		<name>Эскарго</name>
+		<description>Виноградные улитки, фаршированные по-бургундски</description>
+		<portion>12 шт</portion>
+		<price>230</price>
+	</food>
+
+	<food id="34">
+		<photo>Фото 34</photo>
+		<name>Глазунья</name>
+		<description>2 яйца (на выбор ветчина, сыр, помидоры)</description>
+		<portion>150</portion>
+	</food>
+
+	<food id="35">
+		<photo>Фото 35</photo>
+		<name>Омлет</name>
+		<portion>100</portion>
+	</food>
+
+	<food id="36">
+		<photo>Фото 36</photo>
+		<name>Блинчики с мясом</name>
+		<description>Жареные блинчики с мясом</description>
+		<portion>150</portion>
+	</food>
+</menu>
